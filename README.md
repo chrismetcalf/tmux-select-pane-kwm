@@ -1,31 +1,22 @@
-# Select Pane No Wrap
+# Select Pane With KWM
 
-This plugin exposes scripts that won't wrap around panes when during
-`select-pane [UDLR]`.
+This plugin exposes scripts that allow you to switch to neighboring windows when using KWM, instead of wrapping.
+
+Inspired by and forked from <https://github.com/dalejung/tmux-select-pane-no-wrap>.
 
 # tmux.conf
 Uses tmux plugin manager.
 ```
 # Smart pane switching with awareness of vim splits
 # See: https://github.com/christoomey/vim-tmux-navigator
-is_vim='echo "#{pane_current_command}" | grep -iqE "(^|\/)g?(view|n?vim?x?)(diff)?$"'
-bind C-h if-shell "$is_vim" "send-keys ,ztl" "run '#{select_pane_no_wrap} L'"
-bind C-j if-shell "$is_vim" "send-keys ,ztd" "run '#{select_pane_no_wrap} D'"
-bind C-k if-shell "$is_vim" "send-keys ,ztu" "run '#{select_pane_no_wrap} U'"
-bind C-l if-shell "$is_vim" "send-keys ,ztr" "run '#{select_pane_no_wrap} R'"
+is_vim='echo "#{pane_current_command}" | grep -iqE "(^|\/)g?n?(view|vim?)(diff)?$"'
+bind -n C-h if-shell "$is_vim" "send-keys C-h" "run '#{select_pane_kwm} L'"
+bind -n C-j if-shell "$is_vim" "send-keys C-j" "run '#{select_pane_kwm} D'"
+bind -n C-k if-shell "$is_vim" "send-keys C-k" "run '#{select_pane_kwm} U'"
+bind -n C-l if-shell "$is_vim" "send-keys C-l" "run '#{select_pane_kwm} R'"
 
-set -g @plugin 'dalejung/tmux-select-pane-no-wrap'
+set -g @plugin 'chrismetcalf/tmux-select-pane-kwm'
 run '~/.tmux/tpm/tpm'
 ```
 
-# vim
-
-I use a modified `vim-tmux-navigator` because the command it uses it hardcoded.
-
-```
-call plug#begin('~/.vim/plugged')
-...
-Plug 'dalejung/vim-tmux-navigator', {'branch': 'select_pane_no_wrap'}
-...
-call plug#end()
-```
+![Magic](https://media4.giphy.com/media/12NUbkX6p4xOO4/200.gif)

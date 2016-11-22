@@ -11,4 +11,4 @@ tmux set-environment -g at_edge $CURRENT_DIR/scripts/at_edge.sh
 # Example:
 # vim-tmux-navigator
 # bind C-h if-shell "$is_vim" "send-keys ,ztl" "run '#{select_pane_no_wrap} L'"
-tmux set-environment -g select_pane_no_wrap $CURRENT_DIR/scripts/select-pane.sh
+tmux set-environment -g select_pane_kwm $CURRENT_DIR/scripts/select-pane.sh

@@ -5,18 +5,22 @@ pane_at_edge() {
      "U") 
        coord='top'
        op='<='
+       compass='north'
      ;;
      "D")
        coord='bottom'
        op='>='
+       compass='south'
      ;;
      "L")
        coord='left'
        op='<='
+       compass='west'
      ;;
      "R")
        coord='right'
        op='>='
+       compass='east'
      ;;
   esac
 
@@ -37,12 +41,34 @@ pane_at_edge() {
   echo $at_edge
 }
 
-select_pane_no_wrap() {
+compass_direction() {
+  direction=$1
+
+  case "$direction" in
+     "U") 
+       compass='north'
+     ;;
+     "D")
+       compass='south'
+     ;;
+     "L")
+       compass='west'
+     ;;
+     "R")
+       compass='east'
+     ;;
+ esac
+
+ echo $compass
+}
+
+select_pane_kwm() {
   direction=$1
   at_edge=$(pane_at_edge $direction)
+  compass_direction=$(compass_direction $direction)
   if [ "$at_edge" = 0 ] ; then
     tmux select-pane "-$direction"
   else
-    :
+    kwmc window -f $compass_direction
   fi
 }
